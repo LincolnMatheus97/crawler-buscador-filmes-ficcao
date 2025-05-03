@@ -4,8 +4,6 @@ const cheerio = require('cheerio'); // carrega o html retornado e permite seleci
 
 
 
-const paginasVisitadas = new Set();
-
 async function crawlerPagina(urlPadrao,urlAtual) { // definindo uma funcao assincrona
 
     const urlCompleta = new URL(urlPadrao, urlAtual).href;
