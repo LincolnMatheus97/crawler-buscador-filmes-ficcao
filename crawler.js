@@ -1,42 +1,56 @@
+const axios = require("axios");
+const cheerio = require("cheerio");
 
-const axios = require('axios'); //biblioteca para fazer as requisicoes http (abaixar as paginas)
-const cheerio = require('cheerio'); // carrega o html retornado e permite selecionar os elementos
+const paginasVisitadas = [];
 
+async function crawlPagina(urlPadrao, urlAtual, paginasVisitadas) {
+  try {
+    const urlCompleta =
+      urlPadrao + (urlAtual.startsWith("/") ? urlAtual.slice(1) : urlAtual);
 
-
-async function crawlerPagina(urlPadrao,urlAtual) { // definindo uma funcao assincrona
-
-    const urlCompleta = new URL(urlPadrao, urlAtual).href;
-    if(paginasVisitadas.has(urlCompleta)){ // se pagina ja foi visitada, parar a funçao
-        return;
+    if (paginasVisitadas.includes(urlCompleta)) {
+      console.log(`Já visitado: ${urlCompleta}`);
+      return;
     }
-    
-    try {
 
-        const resposta = await axios.get(urlCompleta); // axios.get faz a requisicao http e buscar o conteudo da pagina; await esperar a resposta chegar
-        const $ = cheerio.load(resposta.data); // transforma o html em um objeto que pode ser manipulado; a variavel $ permite buscar os elementos do html,como $('a') e $('p')
-        const links = [];
+    paginasVisitadas.push(urlCompleta);
 
-        $('a').each( (i,elemento) => { // $('a') pega todos os elementos <a>, e each itera sobre cada <a>
-            const texto = $(elemento).text(); //pegar texto que esta dentro do link
-            const href = $(elemento).attr('href');
-            if(href){ // se houver link, coloca-lo no meu array
-                links.push(href);
-            }
-        })
+    console.log("Visitando:", urlCompleta);
 
-        paginasVisitadas.push(urlCompleta)
+    const resposta = await axios.get(urlCompleta);
+    const $ = cheerio.load(resposta.data);
+    const links = [];
 
-        //funcao recursiva para verificar as outras paginas
-        for(const url of links){
-            console.log(url)
-            crawlerPagina(urlPadrao,url);
-        }
-        
-    }catch (erro) {
-        console.error('erro ao acessar pagina: ',erro.messege);
+    $("a").each((i, elemento) => {
+      const texto = $(elemento).text().trim();
+      const href = $(elemento).attr("href");
+      if (href) {
+        links.push({ texto, href });
+      }
+    });
+
+    console.log(`Links encontrados em ${urlCompleta}:`, links);
+
+    for (const link of links) {
+      const linkCompleto = link.href.startsWith("http")
+        ? link.href
+        : urlPadrao + link.href;
+
+      await crawlPagina(
+        urlPadrao,
+        linkCompleto.replace(urlPadrao, ""),
+        paginasVisitadas
+      );
     }
+  } catch (erro) {
+    console.error("Erro ao acessar a página:", erro.message);
+  }
+
+  console.log("Páginas visitadas:", paginasVisitadas);
 }
 
-
-crawlerPagina('http://127.0.0.1:5500/pages','blade_runner.html');
+crawlPagina(
+  "http://127.0.0.1:5500/pages/",
+  "blade_runner.html",
+  paginasVisitadas
+);
