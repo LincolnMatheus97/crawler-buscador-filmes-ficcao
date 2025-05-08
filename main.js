@@ -1,9 +1,9 @@
 import path from 'path';
-import fs from 'fs';
 import { fileURLToPath } from 'url';
 import { question } from 'readline-sync';
 import { crawler, sitesVisitados } from "./crawler.js";
 import { contarReferencias, buscarTermo } from "./search.js";
+import { saveJson } from './saveJson.js';
 
 // Substituição para __dirname em módulos ES
 const __filename = fileURLToPath(import.meta.url);
@@ -27,39 +27,33 @@ function main() {
     let todasAsBuscas = {}; // Objeto para armazenar os resultados de todas as buscas
 
     console.log("\nIniciando buscas...");
-    let termo = question("Digite o termo a ser buscado (ou aperte ENTER para encerrar): ");
-    if (termo === '') { // Verifica se o usuário não digitou nada
-        console.log("Nenhum termo digitado. Encerrando o programa.");
-        return;
-    }
-    termo.toLowerCase(); // Converte o termo para minúsculas para comparação case-insensitive
 
-    while (termo !== '') { // Loop para permitir múltiplas buscas
-        let resultadosDaBusca = buscarTermo(termo);
-
-        if (resultadosDaBusca && resultadosDaBusca.length !== 0) { // Verifica se há resultados para o termo buscado
-            todasAsBuscas[termo] = resultadosDaBusca;
-        }
-
-        termo = question("Digite o termo a ser buscado (ou aperte ENTER para encerrar): ");
-        if (termo === '') { // Verifica se o usuário não digitou nada
+    while (true) {
+        // Solicita o termo ao usuário
+        let termo = question("Digite o termo a ser buscado (ou aperte ENTER para encerrar): ").trim();
+    
+        // Verifica se o usuário não digitou nada
+        if (termo === '') {
             console.log("Nenhum termo digitado. Encerrando o programa.");
             break;
         }
-        termo.toLowerCase();
-
+    
+        // Converte o termo para minúsculas para comparação case-insensitive
+        termo = termo.toLowerCase();
+    
+        // Executa a busca pelo termo
+        let resultadosDaBusca = buscarTermo(termo);
+    
+        // Verifica se há resultados para o termo buscado
+        if (resultadosDaBusca && resultadosDaBusca.length !== 0) {
+            todasAsBuscas[termo] = resultadosDaBusca;
+        } else {
+            console.log(`Nenhum resultado encontrado para "${termo}".`);
+        }
     }
+    
 
-    //  Verifica se há resultados de busca para salvar
-    if (Object.keys(todasAsBuscas).length > 0) { 
-        let caminhoArquivoJSON = path.join(__dirname, 'resultados_busca.json'); // Caminho do arquivo JSON onde os resultados serão salvos
-
-        // Salva os resultados de todas as buscas em um arquivo JSON
-        fs.writeFileSync(caminhoArquivoJSON, JSON.stringify(todasAsBuscas, null, 2)); 
-        console.log(`\nResultados de todas as buscas salvos em ${caminhoArquivoJSON}`);
-    } else {
-        console.log('\nNenhum resultado de busca para salvar em JSON.');
-    }
+    saveJson(todasAsBuscas)
 
     console.log("\nProcesso concluído.");
 }
