@@ -113,3 +113,21 @@ npm install axios
 ```
 npm install cheerio
 ```
+
+4. Insatle o Express(Para rodar o servidor local):
+
+```
+npm install express
+```
+
+5. Rodar o servidor local com o comando node:
+
+```
+node server.js
+```
+
+6. Acesse pelo navegador:
+
+```
+http://localhost:3000
+```
