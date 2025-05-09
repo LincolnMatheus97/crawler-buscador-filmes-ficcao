@@ -34,11 +34,12 @@ app.get('/buscar', (req, res) => {
 
     const resultadosDaBusca = buscarTermo(termo);
 
-    buscasRealizadas[termo] = resultadosDaBusca.length
+    buscasRealizadas[termo] = resultadosDaBusca.length > 0
         ? resultadosDaBusca
         : [`Nenhum resultado encontrado para "${termo}".`];
 
     console.log(`Busca realizada: ${termo}`);
+
     res.json({
         termo,
         resultados: buscasRealizadas[termo]

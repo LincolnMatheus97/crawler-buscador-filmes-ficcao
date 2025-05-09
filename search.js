@@ -50,7 +50,7 @@ function ordenarResultados(resultados) {
 }
 
 // Função para exibir os resultados de forma formatada no console
-function exibirResultados(termo, resultados) {
+function exibirResultadosConsole(termo, resultados) {
     console.log(`\nResultados da busca por "${termo}":`);
     const resultadosParaExibicao = resultados
         .filter(r => r.ocorrencias !== 0) // Mostra apenas se houve ocorrências
@@ -65,7 +65,7 @@ function exibirResultados(termo, resultados) {
     if (resultadosParaExibicao.length > 0) {
         console.table(resultadosParaExibicao);
     } else {
-        console.log("Nenhuma página encontrada com este termo ou pontuação relevante.");
+        console.log(`Nenhum resultado encontrado para "${termo}".`);
     }
 }
 
@@ -82,7 +82,7 @@ export function buscarTermo(termo) {
     resultados = ordenarResultados(resultados);
 
     // Exibe no console em formato de tabela
-    exibirResultados(termo, resultados);
+    exibirResultadosConsole(termo, resultados);
 
     // Retorna os dados formatados para salvar em JSON, apenas os relevantes
     return resultados
