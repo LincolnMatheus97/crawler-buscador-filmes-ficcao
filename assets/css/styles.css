@@ -175,19 +175,6 @@ body {
     flex-wrap: wrap;
 }
 
-.observation-component {
-    padding: 10px 20px;
-    color: #11296b;
-    background-color: #ffffff;
-    border-left: 4px solid #11296b;
-    border-right: 4px solid #11296b;
-    border-radius: 10px;
-    font-weight: bold;
-    max-width: 600px;
-    margin: 20px auto;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
-}
-
 .input-submit {
     width: 180px;
     padding: 12px 20px;
@@ -248,6 +235,27 @@ body {
     animation-name: pular;
     position: relative;
 
+}
+
+.resultado-busca {
+    align-items: center;
+    margin: 2rem;
+}
+
+.resultado-busca table {
+    border-collapse: collapse;
+    width: 50%;
+}
+
+.resultado-busca th, td {
+    border: 1px solid #11296b;
+    padding: 8px;
+    text-align: center;
+}
+
+.resultado-busca th {
+    color: #ededed;
+    background-color: #11296b;
 }
 
 @keyframes pular {
