@@ -173,6 +173,7 @@ body {
     justify-content: center;
     gap: 20px;
     flex-wrap: wrap;
+    margin-top: 20px;
 }
 
 .input-submit {
@@ -244,18 +245,35 @@ body {
 
 .resultado-busca table {
     border-collapse: collapse;
-    width: 50%;
+    width: 60%;
+    background-color: var(--color-4);
+    box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+    margin-left: 100px;
+    
 }
 
 .resultado-busca th, td {
-    border: 1px solid #11296b;
+    border: 2px solid #11296b;
     padding: 8px;
-    text-align: center;
+    text-align: center;   
 }
 
 .resultado-busca th {
     color: #ededed;
     background-color: #11296b;
+}
+
+.item-ponto {
+    display: inline-block;
+    min-width: 2em;
+    height: 2em;
+    line-height: 2em;
+    text-align: center;
+    border-radius: 50%;
+    background-color: var(--color-1);
+    color: var(--color-5);
+    font-weight: bold;
+    font-size: 1rem;
 }
 
 @keyframes pular {
