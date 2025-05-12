@@ -15,14 +15,6 @@
   font-family: "Poppins", sans-serif;
 }
 
-.modo-escuro {
-  position: fixed;
-  background: rgba(161, 161, 187, 0.2);
-  height: 100vh;
-  width: 100vw;
-  z-index: 0;
-}
-
 body {
   height: 100vh;
   background-image: url(/assets/css/imgs/bussolas-2.png);
@@ -222,15 +214,17 @@ body {
 .resultado-busca {
   align-items: center;
   margin: 2rem;
+  height: 300px;
+  overflow-y: auto;
+  overflow-x: auto;
 }
 
 .resultado-busca table {
   border-collapse: collapse;
-  width: 60%;
+  width: 100%;
   background-color: var(--color-4);
   box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px,
     rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
-  margin-left: 100px;
 }
 
 .resultado-busca th,
@@ -282,6 +276,12 @@ td {
     padding: 10px 2.5rem 10px 3rem;
   }
 
+  .container-crawlio {
+    margin-top: 80px;
+  }
+  .resultado-busca {
+    width: 95%;
+  }
   .icone-input {
     width: 16px;
     height: 16px;
