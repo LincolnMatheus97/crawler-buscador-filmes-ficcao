@@ -10,7 +10,7 @@ function exibirResultadosHTML(resultados) {
     resultados[0].startsWith("Nenhum resultado encontrado para")
   ) {
     let mensagem = resultados[0];
-    resultadoBuscaDiv.innerHTML = `<p>${mensagem}</p>`;
+    resultadoBuscaDiv.innerHTML = `<p style="color: red; font-weight: bold; text-align: center;">${mensagem}</p>`;
     return;
   }
 
@@ -64,8 +64,7 @@ function exibirResultadosHTML(resultados) {
     // Exibe a tabela no HTML
     resultadoBuscaDiv.innerHTML = tabelaHTML;
   } else {
-    resultadoBuscaDiv.innerHTML =
-      "<p>Nenhuma página encontrada com este termo.</p>";
+    resultadoBuscaDiv.innerHTML = `<p style="color: #555; font-weight: bold; text-align: center;">Nenhuma página encontrada com este termo.</p>`;
   }
 }
 
@@ -73,28 +72,26 @@ document
   .getElementById("search-form")
   .addEventListener("submit", async function (e) {
     e.preventDefault();
-    const termo = document.getElementById("input-buscador").value.trim(); // Obtém o termo da busca
-    const resultadoBuscaDiv = document.getElementById("resultado-busca"); // Obtém a div onde serão exibidos os resultados da busca
+    const termo = document.getElementById("input-buscador").value.trim();
+    const resultadoBuscaDiv = document.getElementById("resultado-busca");
 
-    // Se não for passado nenhum termo
     if (!termo) {
-      resultadoBuscaDiv.innerHTML =
-        "<p>Por favor, digite um termo para buscar.</p>";
+      resultadoBuscaDiv.innerHTML = `<p style="color: red; font-weight: bold; text-align: center;">Por favor, digite um termo para buscar.</p>`;
       return;
     }
 
-    resultadoBuscaDiv.innerHTML = "<p>Buscando...</p>";
+    resultadoBuscaDiv.innerHTML = `<p style="color: #333; font-weight: bold; text-align: center;">Buscando...</p>`;
 
     try {
       const response = await fetch(
         `/buscar?inputBuscador=${encodeURIComponent(termo)}`
-      ); // Obtém a resposta da busca
-      const data = await response.json(); // Obtém os dados (termo e resultados) da busca
+      );
+      const data = await response.json();
 
-      exibirResultadosHTML(data.resultados); // Envia os dados de resultados da busca para serem exibidos no HTML
+      exibirResultadosHTML(data.resultados);
     } catch (error) {
       console.error("Erro ao buscar:", error);
-      resultadoBuscaDiv.innerHTML = `<p>Ocorreu um erro ao buscar: ${error.message}</p>`;
+      resultadoBuscaDiv.innerHTML = `<p style="color: red; font-weight: bold; text-align: center;">Ocorreu um erro ao buscar: ${error.message}</p>`;
     }
   });
 
@@ -102,7 +99,7 @@ document
   .getElementById("save-json")
   .addEventListener("click", async function () {
     const resultadoBuscaDiv = document.getElementById("resultado-busca");
-    resultadoBuscaDiv.innerHTML = "<p>Salvando dados...</p>";
+    resultadoBuscaDiv.innerHTML = `<p style="color: #333; font-weight: bold; text-align: center;">Salvando dados...</p>`;
 
     try {
       const response = await fetch("/salvar-json", { method: "POST" });
@@ -110,15 +107,15 @@ document
 
       if (data.success) {
         console.log("Dados salvos com sucesso!");
-        resultadoBuscaDiv.innerHTML = "<p>Dados salvos com sucesso!</p>";
+        resultadoBuscaDiv.innerHTML = `<p style="color: green; font-weight: bold; text-align: center;">Dados salvos com sucesso!</p>`;
       } else {
         console.log("Falha ao salvar os dados.");
-        resultadoBuscaDiv.innerHTML = `<p>Falha ao salvar os dados: ${
+        resultadoBuscaDiv.innerHTML = `<p style="color: red; font-weight: bold; text-align: center;">Falha ao salvar os dados: ${
           data.message || "Erro não especificado."
         }</p>`;
       }
     } catch (error) {
       console.error("Erro ao salvar os dados:", error);
-      resultadoBuscaDiv.innerHTML = `<p>Erro ao salvar os dados: ${error.message}</p>`;
+      resultadoBuscaDiv.innerHTML = `<p style="color: red; font-weight: bold; text-align: center;">Erro ao salvar os dados: ${error.message}</p>`;
     }
   });
