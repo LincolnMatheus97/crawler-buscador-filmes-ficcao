@@ -46,7 +46,7 @@ function exibirResultadosHTML(resultados) {
                 <td>${item.ocorrencias}</td>
                 <td>${item.linksRecebidos}</td>
                 <td>${item.autoReferencia}</td>
-                <td>${item.pontos}</td>
+                <td><span class="item-ponto">${item.pontos}</span></td>
                 </tr>
             `;
         });
