@@ -4,6 +4,15 @@ Crawler e motor de busca simples para páginas HTML sobre filmes de ficção cie
 
 ---
 
+## 👨‍💻 Integrantes
+
+- **Lincoln Matheus**  
+- **Lucas Morais**  
+- **Natiele Graziely**  
+- **Thalisson Moura**
+
+---
+
 ## 📂 Estrutura do Projeto
 
 - `pages/` – Contém as 5 páginas HTML com links entre si.
@@ -11,7 +20,10 @@ Crawler e motor de busca simples para páginas HTML sobre filmes de ficção cie
 - `search.js` – Implementação do motor de busca com critérios de ranqueamento.
 - `results/` – Dados processados e salvos localmente.
 - `index.html` – Interface simples para realizar buscas e visualizar resultados.
-
+- `assets/` – Contém arquivos estáticos da interface (CSS, JS e imagens).
+- `node_modules/` – Pasta gerada automaticamente com as dependências instaladas via `npm`.
+- `server.js` – Script do servidor local usando Express.
+- `package.json` – Arquivo de configuração do projeto Node.js (dependências e scripts).
 ---
 
 ## 🔗 Mapeamento de Links Entre Páginas
@@ -45,6 +57,26 @@ O sistema de busca ranqueia os resultados com base nos seguintes critérios:
 | ⚠️ Autorreferência             | -15 pontos                |
 
 ---
+
+## 📦 Bibliotecas Utilizadas
+
+A seguir, as principais bibliotecas e módulos usados no projeto:
+
+- **[Axios](https://www.npmjs.com/package/axios)**  
+  Usada para realizar requisições HTTP. Mesmo com páginas locais, o Axios pode simular o comportamento de uma requisição à web, útil para estrutura modular e escalável.
+
+- **[Cheerio](https://www.npmjs.com/package/cheerio)**  
+  Biblioteca que permite manipular e extrair dados de documentos HTML de forma semelhante ao jQuery. Essencial para identificar links e trechos de texto durante o crawling.
+
+- **[Express](https://www.npmjs.com/package/express)**  
+  Framework para Node.js que facilita a criação de servidores web. Foi utilizado para rodar o servidor local e servir a interface web de busca ao usuário.
+
+- **[fs (File System)](https://nodejs.org/api/fs.html)**  
+  Módulo nativo do Node.js para leitura e escrita de arquivos no sistema. Usado para salvar e acessar os dados extraídos das páginas HTML, como os resultados do crawler.
+
+- **[Node.js (Core)](https://nodejs.org/)**  
+  Ambiente de execução JavaScript no servidor. Toda a lógica do crawler, do motor de busca e do servidor Express foi implementada em Node.js.
+
 
 ### ⚖️ Critérios de Desempate
 
@@ -91,8 +123,8 @@ Outro exemplo: `matrix.html`
 | **🎯 Total**           |          | **60 pontos** |
 
 > ⚠️ **Observação:**  
-> Todo o processo de coleta (crawler) e busca (search) é realizado via **terminal**, utilizando scripts Node.js. Os comandos devem ser executados na linha de comando após a instalação das dependências com `npm install`.  
-> É possível estender o projeto para uma interface web, mas esta versão foi projetada para ser usada via **CLI (Command Line Interface)**.
+> Embora o processamento de coleta (crawler) e indexação ainda seja feito via **scripts Node.js** executados pelo terminal, esta versão do projeto **inclui uma interface web funcional**, permitindo que as buscas sejam realizadas diretamente pelo navegador.  
+> Os resultados da busca são exibidos de forma dinâmica na interface web, tornando a experiência mais intuitiva e acessível ao usuário.
 
 ### Passos para rodar o projeto:
 
@@ -131,3 +163,9 @@ node server.js
 ```
 http://localhost:3000
 ```
+
+## 🎥 Demonstração do Projeto
+
+Confira a demonstração do funcionamento do nosso crawler e motor de busca no vídeo produzido por um dos integrantes do grupo:
+
+[![Demonstração do Projeto](https://img.youtube.com/vi/mQsCs9Qo3HE/0.jpg)](https://youtu.be/mQsCs9Qo3HE)
