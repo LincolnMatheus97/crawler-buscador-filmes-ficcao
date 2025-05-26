@@ -6,9 +6,9 @@ Crawler e motor de busca simples para páginas HTML sobre filmes de ficção cie
 
 ## 👨‍💻 Integrantes
 
-- **Lincoln Matheus**  
-- **Lucas Morais**  
-- **Natiele Graziely**  
+- **Lincoln Matheus**
+- **Lucas Morais**
+- **Natiele Graziely**
 - **Thalisson Moura**
 
 ---
@@ -24,6 +24,7 @@ Crawler e motor de busca simples para páginas HTML sobre filmes de ficção cie
 - `node_modules/` – Pasta gerada automaticamente com as dependências instaladas via `npm`.
 - `server.js` – Script do servidor local usando Express.
 - `package.json` – Arquivo de configuração do projeto Node.js (dependências e scripts).
+
 ---
 
 ## 🔗 Mapeamento de Links Entre Páginas
@@ -50,11 +51,11 @@ Crawler e motor de busca simples para páginas HTML sobre filmes de ficção cie
 
 O sistema de busca ranqueia os resultados com base nos seguintes critérios:
 
-| Critério                       | Pontuação                 |
-| ------------------------------ | ------------------------- |
-| 🔗 Link recebido               | +10 pontos por link       |
-| 🔍 Ocorrência do termo buscado | +10 pontos por ocorrência |
-| ⚠️ Autorreferência             | -15 pontos                |
+| Critério                       | Pontuação                |
+| ------------------------------ | ------------------------ |
+| 🔗 Link recebido               | +10 pontos por link      |
+| 🔍 Ocorrência do termo buscado | +5 pontos por ocorrência |
+| ⚠️ Autorreferência             | -15 pontos               |
 
 ---
 
@@ -71,20 +72,17 @@ A seguir, as principais bibliotecas e módulos usados no projeto:
 - **[Express](https://www.npmjs.com/package/express)**  
   Framework para Node.js que facilita a criação de servidores web. Foi utilizado para rodar o servidor local e servir a interface web de busca ao usuário.
 
-- **[fs (File System)](https://nodejs.org/api/fs.html)**  
-  Módulo nativo do Node.js para leitura e escrita de arquivos no sistema. Usado para salvar e acessar os dados extraídos das páginas HTML, como os resultados do crawler.
-
 - **[Node.js (Core)](https://nodejs.org/)**  
   Ambiente de execução JavaScript no servidor. Toda a lógica do crawler, do motor de busca e do servidor Express foi implementada em Node.js.
 
-
-### ⚖️ Critérios de Desempate
+## ⚖️ Critérios de Desempate
 
 Caso duas ou mais páginas obtenham a mesma pontuação total, a ordenação dos resultados será determinada pelos seguintes critérios, nesta ordem:
 
-1. ✅ **Maior número de links recebidos**
+1. ✅ **Maior número de links recebidos** (referências)
 2. 🔎 **Maior número de ocorrências do termo buscado**
-3. 🚫 **Ausência de autoreferência**
+3. 🚫 **Ausência de autoreferência** (páginas sem autoreferência têm prioridade)
+4. 🆚 **Desempate alfabético pelo caminho da página**
 
 ---
 
@@ -98,12 +96,12 @@ Suponha uma busca pelo termo **"Matrix"**. A página `blade_runner.html` possui 
 
 ### 📝 Cálculo:
 
-| Critério               | Detalhes                 | Pontuação     |
-| ---------------------- | ------------------------ | ------------- |
-| 🔗 Links recebidos     | 4 links × 10 pontos      | +40 pontos    |
-| 🔍 Ocorrência do termo | 1 ocorrência × 10 pontos | +10 pontos    |
-| ⚠️ Autorreferência     | Penalização              | -15 pontos    |
-| **🎯 Total**           |                          | **35 pontos** |
+| Critério               | Detalhes                                | Pontuação      |
+| ---------------------- | --------------------------------------- | -------------- |
+| 🔗 Links recebidos     | 4 links × 10 pontos (Não contabilizado) | 40 pontos      |
+| 🔍 Ocorrência do termo | 1 ocorrência × 5 pontos                 | +5 pontos      |
+| ⚠️ Autorreferência     | Penalização                             | -15 pontos     |
+| **🎯 Total**           |                                         | **-10 pontos** |
 
 ---
 
